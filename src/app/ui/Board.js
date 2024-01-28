@@ -9,7 +9,7 @@ export default function Board() {
   for (let r = 0; r < 5; r++) {
     let row = [];
     for (let c = 0; c < 5; c++) {
-      row.push(<td className="w-32 h-40 mx-10 mb-10 bg-stone-500 border"></td>);
+      row.push(<td className="w-10 sm:w-32 h-16 sm:h-40 mx-10 mb-10 bg-stone-200 border-2 border-stone-700"></td>);
     }
     displayBoard.push(
       <tr className="" key={r}>
