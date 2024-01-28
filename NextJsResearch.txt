@@ -1,0 +1,21 @@
+Next JS:
+- A framework built on top of react 
+- Enables server-side rendering and static site generation
+
+Server Side rendering:
+- With CRA everything is loaded and rendered on the client
+- This makes things fast and dynamic (don't have to request new page from server)
+- When you open source code in browser you won't see any HTML content except the root div containing all the JS files
+- Terrible for SEO since search engine crawlers can't pick up content (H1s ect)
+- Next allows first page load to be rendered by the server
+- This is great for SEO & performance
+- Get the best of both worlds
+
+Other Advantages:
+- Easy routing using pages folder (No need to use React Router)
+- Ability to create API routes in Next file structure
+- Export static website (can be run without server)
+- Static websites can be hosted anywhere
+- Easy deployment (Can host on any service that can host a Node app)
+- Can use Vercel for deployment
+
