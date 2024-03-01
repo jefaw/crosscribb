@@ -1,7 +1,8 @@
 'use client'
 
 import { initBoard } from "../lib/helpers";
-export default function Board() {
+
+export default function Board(props) {
   // let deck = new Deck();
   let board = initBoard();
   let displayBoard = [];
@@ -22,7 +23,7 @@ export default function Board() {
       // Pushing a table cell (td) with Tailwind CSS classes into the row
       row.push(<td 
         key={`${r}-${c}`} // Adding a unique key to each table cell
-        className="w-10 sm:w-32 h-16 sm:h-40 mx-10 mb-10 bg-stone-200 border-2 border-stone-700 hover:bg-blue-300 transition duration-300 cursor-pointer"
+        className="w-10 sm:w-28 h-20 sm:h-1/5 mx-10 mb-10 bg-stone-200 border-2 border-stone-700 hover:bg-blue-300 transition duration-300 cursor-pointer"
         
         onClick={() => handleCellClick(r, c)}>
 
@@ -38,7 +39,7 @@ export default function Board() {
 
   return (
     <div className="flex justify-center">
-      <table className="bg-green-600 border-separate border-spacing-4">
+      <table className="bg-green-600 border-separate border-spacing-4 h-screen">
         <tbody>{displayBoard}</tbody>
       </table>
     </div>

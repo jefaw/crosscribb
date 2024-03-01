@@ -13,16 +13,19 @@ export default function Game(props) {
   //get hands for 2 players
   const hand1 = deck.getHand();
   const hand2 = deck.getHand();
+
+  // const centerCard = deck.getHand();
+
   //maybe move above stuff to a constructor in case it runs multiple times
 
   //start game
 
 
   return (
-    <div>
-      <Player name="BenDaBeast" hand={hand1}/>
-      <Board />
-      <Player name="Jeffaw" hand={hand2} />
+    <div className="flex">
+      <div className="flex-1"><Player name="BenDaBeast" hand={hand1} /></div>
+      <div className="flex-2"><Board /></div>
+      <div className="flex-1"><Player name="Jeffaw" hand={hand2} /></div>
     </div>
   );
 }
