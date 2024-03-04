@@ -1,35 +1,21 @@
-'use client'
-
-import { initBoard } from "../lib/helpers";
+import Spot from "./Spot";
 
 export default function Board(props) {
-  // let deck = new Deck();
-  let board = initBoard();
+  const { board, centerCard } = props;
   let displayBoard = [];
-
-  // Function to handle the click on a table cell
-  const handleCellClick = (row, col) => {
-    // You can perform actions based on the clicked cell (row, col)
-    console.log(`Clicked on cell (${row}, ${col})`);
-  };
-
-  //loop to create rows
+  // Render board
   for (let r = 0; r < 5; r++) {
     let row = [];
-
-    // Loop to create columns within each row
     for (let c = 0; c < 5; c++) {
-      
-      // Pushing a table cell (td) with Tailwind CSS classes into the row
-      row.push(<td 
-        key={`${r}-${c}`} // Adding a unique key to each table cell
-        className="w-10 sm:w-28 h-20 sm:h-1/5 mx-10 mb-10 bg-stone-200 border-2 border-stone-700 hover:bg-blue-300 transition duration-300 cursor-pointer"
-        
-        onClick={() => handleCellClick(r, c)}>
-
-        </td>);
+      // Pushing spot into row
+      if (r === 2 && c === 2) {
+        row.push(<Spot r={r} c={c} card={centerCard} key={`${r}, ${c}`} />);
+      } else {
+        row.push(<Spot r={r} c={c} card={board[r][c]} key={`${r}, ${c}`} />);
+      }
     }
-     // Pushing a table row (tr) with the cells (td) into the displayBoard array
+
+    // Pushing row of spots into board
     displayBoard.push(
       <tr className="" key={r}>
         {row}

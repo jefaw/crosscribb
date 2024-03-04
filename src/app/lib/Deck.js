@@ -19,9 +19,9 @@ export default class Deck {
     return card;
   }
 
-  getHand(){
-    const hand = []
-    for (let i =0;i<14;i++ ){
+  getHand() {
+    const hand = [];
+    for (let i = 0; i < 14; i++) {
       hand[i] = this.getCard();
     }
     return hand;
@@ -30,13 +30,12 @@ export default class Deck {
   //Fishman-yeetes shuffle deck alg
   shuffleDeck(originalArray) {
     const newArray = [...originalArray]; // Create a copy to avoid modifying the original array
-  
+
     for (let i = newArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
     }
-  
+
     return newArray;
   }
 }
-
