@@ -25,7 +25,7 @@ export default function Board(props) {
 
   return (
     <div className="flex justify-center">
-      <table className="bg-green-600 border-separate border-spacing-4 h-screen">
+      <table className="bg-green-600 border-separate border-spacing-4 h-screen w-9/12">
         <tbody>{displayBoard}</tbody>
       </table>
     </div>

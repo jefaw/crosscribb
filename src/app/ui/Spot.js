@@ -10,7 +10,7 @@ export default function Spot(props) {
   };
 
   const cardSpotStyles =
-    "w-10 h-20 mx-10 mb-10 bg-stone-200 border-2 border-stone-700 hover:bg-blue-300 transition duration-300 cursor-pointer";
+    "w-1/5 h-1/5 mx-10 mb-10 bg-stone-200 border-2 border-stone-700 hover:bg-blue-300 transition duration-300 cursor-pointer";
 
   if (card) {
     return (

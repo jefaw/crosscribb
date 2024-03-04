@@ -14,6 +14,12 @@ export default function Game(props) {
   }, []);
 
   return (
+    /*
+    Game Layout: 
+      Player 1
+      Board
+      Player 2
+     */
     <div className="flex">
       <div className="flex-1">
         <Player name="BenDaBeast" hand={hand1} />

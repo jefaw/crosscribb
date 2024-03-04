@@ -1,4 +1,5 @@
 import Card from "./Card";
+
 function newBoard() {
   let board = [];
   for (let r = 0; r < 5; r++) {
