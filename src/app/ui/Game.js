@@ -5,7 +5,7 @@ import Player from "./Player";
 import useCribbs from "../hooks/useCribbs";
 
 export default function Game() {
-  const { board, hand1, hand2, centerCard, draggedCard, dragCard, playCard } = useCribbs();
+  const { board, hand1, hand2, centerCard, selectedCard, setDraggedCard, playCard } = useCribbs();
 
   return (
     /*
@@ -16,13 +16,13 @@ export default function Game() {
      */
     <div className="flex">
       <div className="flex-1">
-        <Player name="BenDaBeast" num={1} hand={hand1} dragCard={dragCard} />
+        <Player name="BenDaBeast" num={1} hand={hand1} setDraggedCard={setDraggedCard} />
       </div>
       <div className="flex-auto">
-        <Board board={board} centerCard={centerCard} draggedCard={draggedCard} playCard={playCard} />
+        <Board board={board} centerCard={centerCard} selectedCard={selectedCard} playCard={playCard} />
       </div>
       <div className="flex-1">
-        <Player name="Jeffaw" num={2} hand={hand2} dragCard={dragCard} />
+        <Player name="Jeffaw" num={2} hand={hand2} setDraggedCard={setDraggedCard} />
       </div>
     </div>
   );

@@ -9,40 +9,54 @@ export default function useCribbs(numPlayers = 2) {
   const [hand2, setHand2] = useState([]);
   const [turn, setTurn] = useState(1);
   const [draggedCard, setDraggedCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
-    console.log("deck = ", deck);
     // center card played
     setCenterCard(deck[0]);
     // set player hands
     setHand1(deck.slice(1, 13));
     setHand2(deck.slice(13, 25));
-  }, []);
+    // set initial selected card
+    setSelectedCard(hand1[hand1.length - 1]);
+  }, [deck]);
 
-  function dragCard(player, card) {
+  useEffect(() => {
+    let hand;
+    if (turn === 1) hand = hand1;
+    else if (turn === 2) hand = hand2;
+    const card = hand.length > 0 ? hand[hand.length - 1] : null;
+    console.log("selectedCard = ", card);
+    setSelectedCard(card);
+  }, [hand1, hand2, turn]);
+
+  function selectCard(player, card) {
     console.log("player = " + player + " card = ", card);
     if (player !== turn) return;
-    setDraggedCard(card);
+    setSelectedCard(card);
   }
 
-  function playCard(card, pos) {
-    if (!draggedCard) return;
+  function playCard(pos) {
+    console.log("sel card = ", selectedCard);
+    console.log("dr card = ", draggedCard);
+    if (!selectedCard || (draggedCard && draggedCard.id !== selectedCard.id)) return;
     const [r, c] = pos;
     // Remove card from players hand
     if (turn === 1) {
       setHand1(hand1.slice(0, -1));
-      setDraggedCard(null);
+      setSelectedCard(null);
     } else if (turn === 2) {
       setHand2(hand2.slice(0, -1));
-      setDraggedCard(null);
+      setSelectedCard(null);
     }
     // Display new card on the board
+    console.log("board " + r + " " + c + " = ", selectedCard);
     setBoard((board) => {
-      board[r][c] = card;
+      board[r][c] = selectedCard;
       return board;
     });
     setTurn((turn) => (++turn > numPlayers ? 1 : turn));
   }
 
-  return { board, hand1, hand2, centerCard, draggedCard, dragCard, playCard };
+  return { board, hand1, hand2, centerCard, setDraggedCard, selectedCard, selectCard, playCard };
 }

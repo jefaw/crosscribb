@@ -1,13 +1,17 @@
 export default function Player(props) {
   // hand = props.hand
-  const { num, name, hand, dragCard } = props;
+  const { name, hand, setDraggedCard } = props;
 
   //Get top card
   const card = hand.length > 0 ? hand[hand.length - 1] : false;
 
   function handleDragStart(e) {
     e.dataTransfer.effectAllowed = "move"; // don't show plus icon on drag
-    dragCard(num, card);
+    setDraggedCard(card);
+  }
+
+  function handleDragEnd() {
+    setDraggedCard(null);
   }
 
   const displayCard = (
@@ -31,7 +35,11 @@ export default function Player(props) {
 
   return (
     <>
-      <div className="flex flex-col justify-center bg-orange-600 m-10 py-5" onDragStart={handleDragStart}>
+      <div
+        className="flex flex-col justify-center bg-orange-600 m-10 py-5"
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      >
         <h1 className="text-center text-2xl ">{name}</h1>
         {card ? displayCard : displayCardBack}
       </div>

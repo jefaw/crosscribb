@@ -27,9 +27,11 @@ function shuffleDeck(originalArray) {
 function newDeck() {
   let deck = [];
   let deckIdx = 0;
+  let cardId = 0;
   for (let suitIdx = 0; suitIdx < 4; suitIdx++) {
     for (let nameIdx = 0; nameIdx < 13; nameIdx++) {
-      deck[deckIdx++] = new Card(nameIdx, suitIdx);
+      deck[deckIdx++] = new Card(nameIdx, suitIdx, cardId);
+      cardId++;
     }
   }
   return shuffleDeck(deck);

@@ -1,28 +1,14 @@
-import { useState } from "react";
-import EmptySpot from "./EmptySpot";
 export default function Spot(props) {
-  const { pos, card, draggedCard, playCard } = props;
-  const [r, c] = pos;
-  const [dragOver, setDragOver] = useState(false);
-
-  // Function to handle the click on a table cell
-  const handleCellClick = (row, col) => {
-    // You can perform actions based on the clicked cell (row, col)
-    console.log(`Clicked on cell (${row}, ${col})`);
-  };
+  const { pos, card, selectedCard, playCard } = props;
 
   function handleDragOver(e) {
     e.stopPropagation();
     e.preventDefault();
-    // setDragOver(true);
   }
 
   function handleDrop(e) {
     e.preventDefault();
-    console.log("draggedCard = ", draggedCard);
-    playCard(draggedCard, pos);
-    // setDragOver(false);
-    // playCard();
+    playCard(pos);
   }
 
   const cardSpotStyles =
@@ -30,18 +16,13 @@ export default function Spot(props) {
 
   if (card) {
     return (
-      <td className={cardSpotStyles} onClick={() => handleCellClick(r, c)}>
+      <td className={cardSpotStyles}>
         <img className="" src={card.frontImgSrc} alt="" />
       </td>
     );
   }
   // Show placeholder if no card played
   return (
-    <td
-      className={cardSpotStyles}
-      onClick={() => handleCellClick(r, c)}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-    ></td>
+    <td className={cardSpotStyles} onDragOver={handleDragOver} onDrop={handleDrop} onClick={() => playCard(pos)}></td>
   );
 }

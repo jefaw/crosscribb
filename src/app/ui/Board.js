@@ -1,7 +1,7 @@
 import Spot from "./Spot";
 
 export default function Board(props) {
-  const { board, centerCard, draggedCard, playCard } = props;
+  const { board, centerCard, selectedCard, playCard } = props;
   let displayBoard = [];
   // Render board
   for (let r = 0; r < 5; r++) {
@@ -12,7 +12,7 @@ export default function Board(props) {
         row.push(<Spot pos={[r, c]} card={centerCard} key={`${r}, ${c}`} />);
       } else {
         row.push(
-          <Spot pos={[r, c]} card={board[r][c]} key={`${r}, ${c}`} draggedCard={draggedCard} playCard={playCard} />
+          <Spot pos={[r, c]} card={board[r][c]} key={`${r}, ${c}`} selectedCard={selectedCard} playCard={playCard} />
         );
       }
     }
