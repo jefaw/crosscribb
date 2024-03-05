@@ -3,15 +3,9 @@
 import Board from "./Board";
 import Player from "./Player";
 import useCribbs from "../hooks/useCribbs";
-import { useEffect } from "react";
 
-export default function Game(props) {
-  const { board, hand1, hand2, centerCard, playCard } = useCribbs();
-  console.log("board = ", board);
-
-  useEffect(() => {
-    console.log("game");
-  }, []);
+export default function Game() {
+  const { board, hand1, hand2, centerCard, draggedCard, dragCard, playCard } = useCribbs();
 
   return (
     /*
@@ -22,13 +16,13 @@ export default function Game(props) {
      */
     <div className="flex">
       <div className="flex-1">
-        <Player name="BenDaBeast" hand={hand1} />
+        <Player name="BenDaBeast" num={1} hand={hand1} dragCard={dragCard} />
       </div>
       <div className="flex-auto">
-        <Board board={board} centerCard={centerCard} />
+        <Board board={board} centerCard={centerCard} draggedCard={draggedCard} playCard={playCard} />
       </div>
       <div className="flex-1">
-        <Player name="Jeffaw" hand={hand2} />
+        <Player name="Jeffaw" num={2} hand={hand2} dragCard={dragCard} />
       </div>
     </div>
   );
