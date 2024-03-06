@@ -7,7 +7,6 @@ export default class Card {
     this.name = CARD_NAME[nameIdx];
     this.suit = SUITS[suitIdx];
     this.frontImgSrc = `cards/fronts/${this.suit}_${this.name}.svg`;
-    this.backImgSrc = `cards/backs/red2.svg`;
     this.id = id;
   }
 }

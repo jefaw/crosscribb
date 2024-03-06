@@ -4,6 +4,7 @@ export default function Player(props) {
 
   //Get top card
   const card = hand.length > 0 ? hand[hand.length - 1] : false;
+  const backImgSrc = `cards/backs/red2.svg`; // can be changed in future
 
   function handleDragStart(e) {
     e.dataTransfer.effectAllowed = "move"; // don't show plus icon on drag
@@ -28,7 +29,7 @@ export default function Player(props) {
   const displayCardBack = (
     <img
       className="w-1/5 h-auto self-center hover:border-gray-700 border-transparent border-2 cursor-pointer"
-      src={card.backImgSrc}
+      src={backImgSrc}
       alt=""
     />
   );
@@ -36,7 +37,7 @@ export default function Player(props) {
   return (
     <>
       <div
-        className="flex flex-col justify-center bg-orange-600 m-10 py-5"
+        className="flex flex-col justify-center bg-stone-300 m-10 py-5"
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >

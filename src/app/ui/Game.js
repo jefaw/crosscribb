@@ -14,14 +14,14 @@ export default function Game() {
       Board
       Player 2
      */
-    <div className="flex">
-      <div className="flex-1">
+    <div className="flex flex-col xl:flex-row">
+      <div className="w-100 xl:w-1/4">
         <Player name="BenDaBeast" num={1} hand={hand1} setDraggedCard={setDraggedCard} />
       </div>
-      <div className="flex-auto">
+      <div className="w-100 xl:w-1/2">
         <Board board={board} centerCard={centerCard} selectedCard={selectedCard} playCard={playCard} />
       </div>
-      <div className="flex-1">
+      <div className="w-100 xl:w-1/4">
         <Player name="Jeffaw" num={2} hand={hand2} setDraggedCard={setDraggedCard} />
       </div>
     </div>
