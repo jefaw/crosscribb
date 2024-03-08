@@ -1,5 +1,5 @@
 export default function Spot(props) {
-  const { pos, card, selectedCard, playCard } = props;
+  const { pos, card, playCard } = props;
 
   function handleDragOver(e) {
     e.stopPropagation();
@@ -16,8 +16,8 @@ export default function Spot(props) {
 
   if (card) {
     return (
-      <td className={cardSpotStyles}>
-        <img className="h-100" src={card.frontImgSrc} alt="" />
+      <td className={cardSpotStyles} onDragStart={(e) => (e.dataTransfer.effectAllowed = "move")}>
+        <img className="h-100" src={card.frontImgSrc} alt="" draggable="false" />
       </td>
     );
   }

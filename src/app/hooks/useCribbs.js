@@ -8,7 +8,6 @@ export default function useCribbs(numPlayers = 2) {
   const [hand1, setHand1] = useState([]);
   const [hand2, setHand2] = useState([]);
   const [turn, setTurn] = useState(1);
-  const [draggedCard, setDraggedCard] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
@@ -38,8 +37,7 @@ export default function useCribbs(numPlayers = 2) {
 
   function playCard(pos) {
     console.log("sel card = ", selectedCard);
-    console.log("dr card = ", draggedCard);
-    if (!selectedCard || (draggedCard && draggedCard.id !== selectedCard.id)) return;
+    if (!selectedCard) return;
     const [r, c] = pos;
     // Remove card from players hand
     if (turn === 1) {
@@ -58,5 +56,5 @@ export default function useCribbs(numPlayers = 2) {
     setTurn((turn) => (++turn > numPlayers ? 1 : turn));
   }
 
-  return { board, hand1, hand2, centerCard, setDraggedCard, selectedCard, selectCard, playCard };
+  return { board, hand1, hand2, centerCard, selectedCard, selectCard, playCard };
 }
