@@ -1,8 +1,8 @@
 import { newBoard, newDeck } from "../lib/helpers";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function useCribbs(numPlayers = 2) {
-  const [deck, setDeck] = useState(newDeck());
+  const [deck, setDeck] = useState(null);
   const [board, setBoard] = useState(newBoard());
   const [centerCard, setCenterCard] = useState(null);
   const [hand1, setHand1] = useState([]);
@@ -10,7 +10,15 @@ export default function useCribbs(numPlayers = 2) {
   const [turn, setTurn] = useState(1);
   const [selectedCard, setSelectedCard] = useState(null);
 
+  // load deck
   useEffect(() => {
+    setDeck(newDeck());
+  }, []);
+
+  // set center card and players hands once deck loaded
+  useEffect(() => {
+    if (deck == null) return; // wait until deck has loaded
+    console.log("deck = ", deck);
     // center card played
     setCenterCard(deck[0]);
     // set player hands
@@ -20,6 +28,7 @@ export default function useCribbs(numPlayers = 2) {
     setSelectedCard(hand1[hand1.length - 1]);
   }, [deck]);
 
+  // set selected card based on turn
   useEffect(() => {
     let hand;
     if (turn === 1) hand = hand1;
