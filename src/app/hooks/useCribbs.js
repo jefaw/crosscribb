@@ -65,5 +65,5 @@ export default function useCribbs(numPlayers = 2) {
     setTurn((turn) => (++turn > numPlayers ? 1 : turn));
   }
 
-  return { board, hand1, hand2, centerCard, selectedCard, selectCard, playCard };
+  return { board, turn, hand1, hand2, centerCard, selectedCard, selectCard, playCard };
 }

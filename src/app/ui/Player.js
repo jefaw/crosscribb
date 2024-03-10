@@ -1,6 +1,6 @@
 export default function Player(props) {
   // hand = props.hand
-  const { name, hand } = props;
+  const { name, num, hand, turn } = props;
 
   //Get top card
   const card = hand.length > 0 ? hand[hand.length - 1] : false;
@@ -16,6 +16,7 @@ export default function Player(props) {
         className="w-1/5 h-auto self-center hover:border-gray-700 border-transparent border-2 cursor-pointer"
         src={card.frontImgSrc}
         alt=""
+        draggable={num === turn}
       />
       <p className="self-center"> Cards left: {hand.length}</p>
     </>
@@ -26,6 +27,7 @@ export default function Player(props) {
       className="w-1/5 h-auto self-center hover:border-gray-700 border-transparent border-2 cursor-pointer"
       src={backImgSrc}
       alt=""
+      draggable={false}
     />
   );
 
