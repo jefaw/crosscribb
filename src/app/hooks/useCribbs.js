@@ -1,16 +1,16 @@
-import { newBoard, newDeck } from "../lib/helpers";
+import { newBoard, newDeck, tallyScores } from "../lib/helpers";
 import { useEffect, useRef, useState } from "react";
 
 export default function useCribbs(numPlayers = 2) {
   const [deck, setDeck] = useState(null);
   const [board, setBoard] = useState(newBoard());
-  const [centerCard, setCenterCard] = useState(null);
   const [hand1, setHand1] = useState([]);
   const [hand2, setHand2] = useState([]);
   const [turn, setTurn] = useState(1);
   const [selectedCard, setSelectedCard] = useState(null);
   const [roundScoreVisible, setRoundScoreVisible] = useState(false);
   const [numSpotsLeft, setNumSpotsLeft] = useState(24);
+  const [scoresArray, setScoresArray] = useState([]);
 
   // load deck
   useEffect(() => {
@@ -21,8 +21,11 @@ export default function useCribbs(numPlayers = 2) {
   useEffect(() => {
     if (deck == null) return; // wait until deck has loaded
     console.log("deck = ", deck);
-    // center card played
-    setCenterCard(deck[0]);
+    // set center card
+    setBoard((board) => {
+      board[2][2] = deck[0];
+      return board;
+    });
     // set player hands
     setHand1(deck.slice(1, 13));
     setHand2(deck.slice(13, 25));
@@ -66,11 +69,17 @@ export default function useCribbs(numPlayers = 2) {
     });
     setNumSpotsLeft((numSpotsLeft) => {
       if (numSpotsLeft <= 1) {
-        setRoundScoreVisible(true);
+        roundOver();
       }
       return setNumSpotsLeft(numSpotsLeft - 1);
     });
     setTurn((turn) => (++turn > numPlayers ? 1 : turn));
+  }
+
+  function roundOver() {
+    setRoundScoreVisible(true);
+    //[rowTotals, colTotals]
+    setScoresArray(tallyScores(board));
   }
 
   function nextRound() {
@@ -80,5 +89,5 @@ export default function useCribbs(numPlayers = 2) {
     setDeck(newDeck());
   }
 
-  return { board, turn, hand1, hand2, centerCard, selectedCard, selectCard, roundScoreVisible, playCard, nextRound };
+  return { board, turn, hand1, hand2, selectedCard, selectCard, roundScoreVisible, playCard, nextRound, scoresArray };
 }

@@ -1,16 +1,12 @@
 import { tallyScores } from "../lib/helpers";
 
 export default function RoundScore(props) {
-  const { nextRound, board } = props;
-  
-  //[rowTotals, colTotals]
-  const scoresArray = tallyScores(board)
-
+  const { nextRound, scoresArray } = props;
 
   return (
     <div
       className="absolute inset-0 mx-auto my-auto w-[330px] h-[450px] p-5 px-10 bg-slate-600 opacity-90 text-white rounded-lg border-2 border-solid border-slate-800
-      transition-opacity ease-in duration-700 opacity-90"
+      transition-opacity ease-in duration-700"
     >
       <h2 className="text-center text-4xl mb-5">Round Summary</h2>
       <div className="flex flex-col">
