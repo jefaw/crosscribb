@@ -26,7 +26,7 @@ export default function Game() {
         <div className="w-100 xl:w-1/4">
           <Player name="Jeffaw" num={2} hand={hand2} turn={turn} />
         </div>
-        {roundScoreVisible && <RoundScore nextRound={nextRound} />}
+        {roundScoreVisible && <RoundScore nextRound={nextRound} board={board}/>}
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import Card from "./Card";
+import Score from "./Score";
 
 function newBoard() {
   let board = [];
@@ -37,4 +38,117 @@ function newDeck() {
   return shuffleDeck(deck);
 }
 
-export { newBoard, newDeck };
+export { newBoard, newDeck, tallyScores };
+
+//Scoring
+function tallyScores(board){
+  const rowScore = calculateScore(board);
+  // const colScore = calculateScore(transpose(board));
+  const colScore = calculateScore(board);
+  return [rowScore, colScore];
+}
+
+
+//returns a score object
+function calculateScore(board){
+  let score = 0
+  let pairTotal = 0
+  let runTotal = 0
+  let fifteenTotal = 0
+  // Assuming grid is a 2D array
+  for (const row of board) {
+      let rowScore = 0;
+      let pairScore = 0;
+      let runScore = 0;
+      let fifteenScore = 0;
+
+      console.log(row);
+
+      // Count occurrences of elements in the row
+      const m = {};
+      for (let i = 0; i < row.length; i++) {
+          const n = row[i].value;
+          m[n] = (m[n] || 0) + 1;
+      }
+      console.log(`ROW COUNTS: ${JSON.stringify(m)}`);
+
+      // Calculate 15 sum score
+      const fifteen_combos = calculateFifteen(row, 15, 0, 0, [], []);
+      console.log(`Fifteen combos ${JSON.stringify(fifteen_combos)}`);
+      fifteenScore = fifteen_combos.length * 2;
+
+      // Iterate through the occurrences
+      for (const [key, value] of Object.entries(m)) {
+          // Calculate pairs score
+          if (value > 1) {
+              if (value === 2) pairScore += 2;
+              else if (value === 3) pairScore += 6;
+              else if (value === 4) pairScore += 12;
+          }
+
+          // Calculate runs score
+          let maxrun = 1;
+          let multiplier = value;
+
+          if (!(key - 1 in m)) {
+              let run = 1;
+
+              while (parseInt(key) + run in m) {
+                  multiplier = Math.max(multiplier, m[parseInt(key) + run]);
+                  run += 1;
+              }
+              maxrun = Math.max(run, maxrun);
+
+              // Reset run
+              if (run < 3) multiplier = 1;
+              run = 1;
+          }
+
+          if (maxrun >= 3) {
+              if (maxrun === 5) runScore += 5;
+              else if (maxrun === 4) runScore += 4 * multiplier;
+              else runScore += 3 * multiplier;
+          }
+      }
+      
+      pairTotal += pairScore;
+      runTotal += runScore;
+      fifteenTotal += fifteenScore;
+      rowScore = pairScore + runScore + fifteenScore;
+      score += rowScore;
+      console.log(`Score for this row is: (Pairs: ${pairScore}) + (Runs: ${runScore}) + (Fifteens: ${fifteenScore}) = ${rowScore}`);
+      
+      rowScore = 0;
+
+      console.log(`Running total is: ${score}`);
+      console.log("-------------------------------------------------------");
+      // Can display row scores as sum of scores for pairs, runs, etc. For viewability
+      // Can keep total scores for pairs and runs as well
+    }
+
+    const scoreTotals = new Score(pairTotal, runTotal, fifteenTotal);
+    return scoreTotals;
+}
+
+
+function calculateFifteen(array, targetSum = 15, currentSum = 0, startIndex = 0, path = [], result = []) {
+  if (currentSum === targetSum) {
+      // console.log("15 Combination found:", path);
+      result.push([...path]);
+      return result;
+  }
+
+  for (let i = startIndex; i < array.length; i++) {
+      if (currentSum + Math.min(array[i], 10) <= targetSum) { // Faces count as 10
+        calculateFifteen(array, targetSum, currentSum + Math.min(array[i], 10), i + 1, [...path, array[i]], result);
+      }
+  }
+  return result;
+} 
+
+function transpose(board){
+  //turn rows into col 
+  const boardTransposed = board[0].map((_, colIndex) => board.map(row => row[colIndex]));
+
+  return boardTransposed;
+}

@@ -10,6 +10,7 @@ export default function Board(props) {
       // Pushing spot into row
       if (r === 2 && c === 2) {
         row.push(<Spot pos={[r, c]} card={centerCard} key={`${r}, ${c}`} />);
+        console.log(board)
       } else {
         row.push(
           <Spot pos={[r, c]} card={board[r][c]} key={`${r}, ${c}`} selectedCard={selectedCard} playCard={playCard} />
