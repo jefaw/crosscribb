@@ -9,6 +9,8 @@ export default function useCribbs(numPlayers = 2) {
   const [hand2, setHand2] = useState([]);
   const [turn, setTurn] = useState(1);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [roundScoreVisible, setRoundScoreVisible] = useState(false);
+  const [numSpotsLeft, setNumSpotsLeft] = useState(24);
 
   // load deck
   useEffect(() => {
@@ -62,8 +64,21 @@ export default function useCribbs(numPlayers = 2) {
       board[r][c] = selectedCard;
       return board;
     });
+    setNumSpotsLeft((numSpotsLeft) => {
+      if (numSpotsLeft <= 1) {
+        setRoundScoreVisible(true);
+      }
+      return setNumSpotsLeft(numSpotsLeft - 1);
+    });
     setTurn((turn) => (++turn > numPlayers ? 1 : turn));
   }
 
-  return { board, turn, hand1, hand2, centerCard, selectedCard, selectCard, playCard };
+  function nextRound() {
+    setBoard(newBoard());
+    setRoundScoreVisible(false);
+    setNumSpotsLeft(24);
+    setDeck(newDeck());
+  }
+
+  return { board, turn, hand1, hand2, centerCard, selectedCard, selectCard, roundScoreVisible, playCard, nextRound };
 }
