@@ -43,8 +43,8 @@ export { newBoard, newDeck, tallyScores };
 //Scoring
 function tallyScores(board){
   const rowScore = calculateScore(board);
-  // const colScore = calculateScore(transpose(board));
-  const colScore = calculateScore(board);
+  const colScore = calculateScore(transpose(board));
+
   return [rowScore, colScore];
 }
 
@@ -73,7 +73,7 @@ function calculateScore(board){
       console.log(`ROW COUNTS: ${JSON.stringify(m)}`);
 
       // Calculate 15 sum score
-      const fifteen_combos = calculateFifteen(row, 15, 0, 0, [], []);
+      const fifteen_combos = calculateFifteen(row, 15);
       console.log(`Fifteen combos ${JSON.stringify(fifteen_combos)}`);
       fifteenScore = fifteen_combos.length * 2;
 
@@ -116,11 +116,11 @@ function calculateScore(board){
       fifteenTotal += fifteenScore;
       rowScore = pairScore + runScore + fifteenScore;
       score += rowScore;
-      console.log(`Score for this row is: (Pairs: ${pairScore}) + (Runs: ${runScore}) + (Fifteens: ${fifteenScore}) = ${rowScore}`);
+      console.log(`Score for row: (Pairs: ${pairScore}) + (Runs: ${runScore}) + (Fifteens: ${fifteenScore}) = ${rowScore}`);
       
       rowScore = 0;
 
-      console.log(`Running total is: ${score}`);
+      console.log(`Running total: ${score}`);
       console.log("-------------------------------------------------------");
       // Can display row scores as sum of scores for pairs, runs, etc. For viewability
       // Can keep total scores for pairs and runs as well
@@ -131,19 +131,25 @@ function calculateScore(board){
 }
 
 
-function calculateFifteen(array, targetSum = 15, currentSum = 0, startIndex = 0, path = [], result = []) {
-  if (currentSum === targetSum) {
+function calculateFifteen(array, targetSum = 15) {
+  let result = [];
+
+  function subsetSumsHelper(currentSum, startIndex, path){
+    if (currentSum === targetSum) {
       // console.log("15 Combination found:", path);
       result.push([...path]);
-      return result;
-  }
+      return;
+    } 
 
-  for (let i = startIndex; i < array.length; i++) {
-      if (currentSum + Math.min(array[i], 10) <= targetSum) { // Faces count as 10
-        calculateFifteen(array, targetSum, currentSum + Math.min(array[i], 10), i + 1, [...path, array[i]], result);
+    for (let i = startIndex; i < array.length; i++) {
+      if (currentSum + Math.min(array[i].value, 10) <= targetSum) { // Faces count as 10
+        subsetSumsHelper(currentSum + Math.min(array[i].value, 10), i + 1, [...path, array[i].value]);
       }
+    }
   }
+  subsetSumsHelper(0, 0, [])
   return result;
+  
 } 
 
 function transpose(board){
