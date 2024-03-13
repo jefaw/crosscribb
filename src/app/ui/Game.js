@@ -6,7 +6,8 @@ import useCribbs from "../hooks/useCribbs";
 import RoundScore from "./RoundScore";
 
 export default function Game() {
-  const { board, turn, hand1, hand2, selectedCard, roundScoreVisible, playCard, nextRound, scoresArray } = useCribbs();
+  const { board, turn, hand1, hand2, selectedCard, roundScoreVisible, playCard, nextRound, roundScores, totalScores } =
+    useCribbs();
 
   return (
     /*
@@ -26,7 +27,7 @@ export default function Game() {
         <div className="w-100 xl:w-1/4">
           <Player name="Jeffaw" num={2} hand={hand2} turn={turn} />
         </div>
-        {roundScoreVisible && <RoundScore nextRound={nextRound} scoresArray={scoresArray} />}
+        {roundScoreVisible && <RoundScore nextRound={nextRound} roundScores={roundScores} totalScores={totalScores} />}
       </div>
     </>
   );
