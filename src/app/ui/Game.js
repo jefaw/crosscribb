@@ -4,10 +4,24 @@ import Board from "./Board";
 import Player from "./Player";
 import useCribbs from "../hooks/useCribbs";
 import RoundScore from "./RoundScore";
+import GameOver from "./GameOver";
 
 export default function Game() {
-  const { board, turn, hand1, hand2, selectedCard, roundScoreVisible, playCard, nextRound, roundScores, totalScores } =
-    useCribbs();
+  const { 
+    board, 
+    turn, 
+    hand1, 
+    hand2, 
+    selectedCard, 
+    roundScoreVisible, 
+    playCard, 
+    nextRound, 
+    roundScores, 
+    totalScores,
+    gameOver,
+    winner,
+    resetGame
+  } = useCribbs();
 
   return (
     /*
@@ -27,7 +41,12 @@ export default function Game() {
         <div className="w-100 xl:w-1/4">
           <Player name="Jeffaw" num={2} hand={hand2} turn={turn} />
         </div>
-        {roundScoreVisible && <RoundScore nextRound={nextRound} roundScores={roundScores} totalScores={totalScores} />}
+        {roundScoreVisible && !gameOver && (
+          <RoundScore nextRound={nextRound} roundScores={roundScores} totalScores={totalScores} />
+        )}
+        {gameOver && (
+          <GameOver winner={winner} totalScores={totalScores} resetGame={resetGame} />
+        )}
       </div>
     </>
   );

@@ -23,6 +23,8 @@ export default function useCribbs(numPlayers = 2) {
   const [roundScores, setRoundScores] = useState([]);
   const [totalScores, setTotalScores] = useState([0, 0]);
   const [roundOver, setRoundOver] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [winner, setWinner] = useState(null);
 
   // load deck
   useEffect(() => {
@@ -108,15 +110,37 @@ export default function useCribbs(numPlayers = 2) {
       } else {
         updatedTotalScores[1] += columnRoundScore.total() - rowRoundScore.total();
       }
+
+      // Check for game over condition (31 points)
+      if (updatedTotalScores[0] >= 31) {
+        setGameOver(true);
+        setWinner("Row");
+      } else if (updatedTotalScores[1] >= 31) {
+        setGameOver(true);
+        setWinner("Column");
+      }
+
       return updatedTotalScores;
     });
   }, [roundOver]);
 
   function nextRound() {
+    if (gameOver) return; // Don't start new round if game is over
     setBoard(newBoard());
     setRoundScoreVisible(false);
     setNumSpotsLeft(24);
     setRoundOver(false);
+    setDeck(newDeck());
+  }
+
+  function resetGame() {
+    setBoard(newBoard());
+    setRoundScoreVisible(false);
+    setNumSpotsLeft(24);
+    setRoundOver(false);
+    setGameOver(false);
+    setWinner(null);
+    setTotalScores([0, 0]);
     setDeck(newDeck());
   }
 
@@ -132,5 +156,8 @@ export default function useCribbs(numPlayers = 2) {
     nextRound,
     roundScores,
     totalScores,
+    gameOver,
+    winner,
+    resetGame
   };
 }
