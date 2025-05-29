@@ -1,3 +1,10 @@
+/*
+- Deck class handles:
+  - Creating a full 52-card deck
+  - Shuffling cards
+  - Dealing cards to players
+*/
+
 import Card from "./Card";
 export default class Deck {
   deck = [];

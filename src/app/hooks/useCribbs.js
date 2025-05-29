@@ -1,3 +1,13 @@
+/*
+- State management for:
+  - deck: The shuffled deck of cards
+  - board: 5x5 grid of card placements
+  - hand1/hand2: Players' cards
+  - turn: Current player's turn
+  - selectedCard: Currently selected card
+  - scores: Both round and total scores
+*/
+
 import { newBoard, newDeck, tallyScores } from "../lib/helpers";
 import { useEffect, useRef, useState } from "react";
 

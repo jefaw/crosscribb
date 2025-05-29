@@ -1,3 +1,11 @@
+/*
+- Displays round summary when game ends
+- Shows:
+  - Row vs Column scores
+  - Breakdown of scoring (pairs, runs, fifteens)
+  - Total scores
+  - Winner and point difference
+*/
 export default function RoundScore(props) {
   const { nextRound, roundScores, totalScores } = props;
 
