@@ -17,36 +17,39 @@ export default function Player(props) {
     e.dataTransfer.effectAllowed = "move"; // don't show plus icon on drag
   }
 
-  const displayCard = (
-    <>
-      <img
-        className="w-1/5 h-auto self-center hover:border-gray-700 border-transparent border-2 cursor-pointer"
-        src={card.frontImgSrc}
-        alt=""
-        draggable={num === turn}
-      />
-      <p className="self-center"> Cards left: {hand.length}</p>
-    </>
-  );
-
-  const displayCardBack = (
-    <img
-      className="w-1/5 h-auto self-center hover:border-gray-700 border-transparent border-2 cursor-pointer"
-      src={backImgSrc}
-      alt=""
-      draggable={false}
-    />
-  );
-
   const isActive = num === turn;
   const borderColor = num === 1 ? 'border-cyan-400' : 'border-fuchsia-400';
-  const borderStyle = isActive ? `border-4 ${borderColor}` : 'border-2 border-stone-700';
+  const borderStyle = isActive ? `border-8 ${borderColor}` : 'border-2 border-stone-700';
+
+  // Only show card if it's the player's turn
+  const displayCard = isActive ? (
+    <div className="flex flex-col items-center space-y-2">
+      <img
+        className="w-36 h-auto self-center hover:border-gray-700 border-transparent border-2 cursor-pointer rounded-lg shadow-lg transition-transform hover:scale-105"
+        src={card.frontImgSrc}
+        alt=""
+        draggable={true}
+        onDragStart={handleDragStart}
+      />
+      <p className="text-base font-medium text-gray-700">Cards left: {hand.length}</p>
+    </div>
+  ) : (
+    <div className="flex flex-col items-center space-y-2">
+      <img
+        className="w-36 h-auto self-center rounded-lg shadow-lg"
+        src={backImgSrc}
+        alt=""
+        draggable={false}
+      />
+      <p className="text-base font-medium text-gray-700">Cards left: {hand.length}</p>
+    </div>
+  );
 
   return (
     <>
-      <div className={`flex flex-col justify-center bg-stone-300 m-10 py-5 rounded-lg ${borderStyle} transition-all duration-300`} onDragStart={handleDragStart}>
-        <h1 className="text-center text-2xl">{name}</h1>
-        {card ? displayCard : displayCardBack}
+      <div className={`flex flex-col justify-center bg-stone-300 m-8 py-6 px-4 rounded-lg ${borderStyle} transition-all duration-300`}>
+        <h1 className="text-center text-xl font-bold mb-3 text-gray-800">{name}</h1>
+        {card ? displayCard : null}
       </div>
     </>
   );
