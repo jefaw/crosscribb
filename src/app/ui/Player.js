@@ -20,6 +20,9 @@ export default function Player(props) {
   const isActive = num === turn;
   const borderColor = num === 1 ? 'border-cyan-400' : 'border-fuchsia-400';
   const borderStyle = isActive ? `border-8 ${borderColor}` : 'border-2 border-stone-700';
+  const bgGradient = num === 1 
+    ? 'bg-gradient-to-br from-slate-100 to-slate-200' 
+    : 'bg-gradient-to-br from-slate-100 to-slate-200';
 
   // Only show card if it's the player's turn
   const displayCard = isActive ? (
@@ -31,7 +34,7 @@ export default function Player(props) {
         draggable={true}
         onDragStart={handleDragStart}
       />
-      <p className="text-base font-medium text-gray-700">Cards left: {hand.length}</p>
+      <p className="text-base font-medium text-gray-700">Cards remaining: {hand.length}</p>
     </div>
   ) : (
     <div className="flex flex-col items-center space-y-2">
@@ -41,13 +44,13 @@ export default function Player(props) {
         alt=""
         draggable={false}
       />
-      <p className="text-base font-medium text-gray-700">Cards left: {hand.length}</p>
+      <p className="text-base font-medium text-gray-700">Cards remaining: {hand.length}</p>
     </div>
   );
 
   return (
     <>
-      <div className={`flex flex-col justify-center bg-stone-300 m-8 py-6 px-4 rounded-lg ${borderStyle} transition-all duration-300`}>
+      <div className={`flex flex-col justify-center ${bgGradient} m-8 py-6 px-4 rounded-lg ${borderStyle} transition-all duration-300 shadow-xl backdrop-blur-sm`}>
         <h1 className="text-center text-xl font-bold mb-3 text-gray-800">{name}</h1>
         {card ? displayCard : null}
       </div>
