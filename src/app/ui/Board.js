@@ -1,3 +1,8 @@
+/*
+- Board component:
+  - Renders a 5x5 grid of spots
+  - Each spot can accept a card
+*/
 import Spot from "./Spot";
 
 export default function Board(props) {

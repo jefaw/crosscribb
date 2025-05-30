@@ -1,3 +1,10 @@
+/*
+- Spot component:
+  - Handles drag and drop functionality
+  - Shows either an empty spot or a played card
+  - Manages card placement logic
+*/
+
 export default function Spot(props) {
   const { pos, card, playCard } = props;
 
