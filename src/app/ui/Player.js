@@ -1,3 +1,10 @@
+/*
+- Shows player's name
+- Displays current top card
+- Shows number of cards remaining
+- Handles card selection and drag events
+*/
+
 export default function Player(props) {
   // hand = props.hand
   const { name, num, hand, turn } = props;
@@ -31,10 +38,14 @@ export default function Player(props) {
     />
   );
 
+  const isActive = num === turn;
+  const borderColor = num === 1 ? 'border-cyan-400' : 'border-fuchsia-400';
+  const borderStyle = isActive ? `border-4 ${borderColor}` : 'border-2 border-stone-700';
+
   return (
     <>
-      <div className="flex flex-col justify-center bg-stone-300 m-10 py-5" onDragStart={handleDragStart}>
-        <h1 className="text-center text-2xl ">{name}</h1>
+      <div className={`flex flex-col justify-center bg-stone-300 m-10 py-5 rounded-lg ${borderStyle} transition-all duration-300`} onDragStart={handleDragStart}>
+        <h1 className="text-center text-2xl">{name}</h1>
         {card ? displayCard : displayCardBack}
       </div>
     </>
