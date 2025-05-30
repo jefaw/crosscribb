@@ -1,4 +1,4 @@
-export default function GameOver({ winner, totalScores, resetGame, roundHistory }) {
+export default function GameOver({ winner, totalScores, resetGame, roundHistory, onBackToMenu }) {
   return (
     <div className="absolute inset-0 mx-auto my-auto w-[330px] h-[450px] p-5 bg-slate-600 opacity-95 text-white rounded-lg border-2 border-solid border-slate-800
       transition-opacity ease-in duration-700 overflow-y-auto">
@@ -40,12 +40,20 @@ export default function GameOver({ winner, totalScores, resetGame, roundHistory 
           </div>
         </div>
 
-        <button
-          onClick={resetGame}
-          className="mt-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200"
-        >
-          Play Again
-        </button>
+        <div className="space-y-2 mt-auto">
+          <button
+            onClick={resetGame}
+            className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200"
+          >
+            Play Again
+          </button>
+          <button
+            onClick={onBackToMenu}
+            className="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200"
+          >
+            Back to Menu
+          </button>
+        </div>
       </div>
     </div>
   );
