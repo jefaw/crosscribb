@@ -25,6 +25,8 @@ export default function useCribbs(numPlayers = 2) {
   const [roundOver, setRoundOver] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState(null);
+  const [roundHistory, setRoundHistory] = useState([]);
+  const [currentRound, setCurrentRound] = useState(1);
 
   // load deck
   useEffect(() => {
@@ -99,16 +101,32 @@ export default function useCribbs(numPlayers = 2) {
     // update round score
     const newRoundScores = tallyScores(board); //[rowTotals, colTotals]
     setRoundScores(newRoundScores);
-    // update total score
+    
+    // Calculate round points
     const [rowRoundScore, columnRoundScore] = newRoundScores;
+    const rowPoints = rowRoundScore.total();
+    const columnPoints = columnRoundScore.total();
+    const pointDiff = Math.abs(rowPoints - columnPoints);
+    const roundWinner = rowPoints >= columnPoints ? "Row" : "Column";
+
+    // Add round to history
+    setRoundHistory(prev => [...prev, {
+      round: currentRound,
+      rowScore: rowPoints,
+      columnScore: columnPoints,
+      pointDiff,
+      winner: roundWinner
+    }]);
+
+    // update total score
     setTotalScores((totalScores) => {
       const updatedTotalScores = [...totalScores];
       console.log("rowRoundScore = ", rowRoundScore);
       console.log("columnRoundScore = ", columnRoundScore);
-      if (rowRoundScore.total() >= columnRoundScore.total()) {
-        updatedTotalScores[0] += rowRoundScore.total() - columnRoundScore.total();
+      if (rowPoints >= columnPoints) {
+        updatedTotalScores[0] += pointDiff;
       } else {
-        updatedTotalScores[1] += columnRoundScore.total() - rowRoundScore.total();
+        updatedTotalScores[1] += pointDiff;
       }
 
       // Check for game over condition (31 points)
@@ -131,6 +149,7 @@ export default function useCribbs(numPlayers = 2) {
     setNumSpotsLeft(24);
     setRoundOver(false);
     setDeck(newDeck());
+    setCurrentRound(prev => prev + 1);
   }
 
   function resetGame() {
@@ -142,6 +161,8 @@ export default function useCribbs(numPlayers = 2) {
     setWinner(null);
     setTotalScores([0, 0]);
     setDeck(newDeck());
+    setRoundHistory([]);
+    setCurrentRound(1);
   }
 
   return {
@@ -158,6 +179,8 @@ export default function useCribbs(numPlayers = 2) {
     totalScores,
     gameOver,
     winner,
-    resetGame
+    resetGame,
+    roundHistory,
+    currentRound
   };
 }

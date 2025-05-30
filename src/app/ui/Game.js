@@ -6,6 +6,7 @@ import useCribbs from "../hooks/useCribbs";
 import RoundScore from "./RoundScore";
 import GameOver from "./GameOver";
 import TurnIndicator from "./TurnIndicator";
+import RoundHistory from "./RoundHistory";
 
 export default function Game() {
   const { 
@@ -21,7 +22,9 @@ export default function Game() {
     totalScores,
     gameOver,
     winner,
-    resetGame
+    resetGame,
+    roundHistory,
+    currentRound
   } = useCribbs();
 
   const player1Name = "BenDaBeast";
@@ -49,7 +52,7 @@ export default function Game() {
           <RoundScore nextRound={nextRound} roundScores={roundScores} totalScores={totalScores} />
         )}
         {gameOver && (
-          <GameOver winner={winner} totalScores={totalScores} resetGame={resetGame} />
+          <GameOver winner={winner} totalScores={totalScores} resetGame={resetGame} roundHistory={roundHistory} />
         )}
         {!gameOver && (
           <TurnIndicator 
@@ -58,6 +61,7 @@ export default function Game() {
             player2Name={player2Name} 
           />
         )}
+        <RoundHistory roundHistory={roundHistory} />
       </div>
     </>
   );
