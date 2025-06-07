@@ -66,6 +66,12 @@ function calculateScore(board) {
     // Count occurrences of elements in the row
     const m = {};
     for (let i = 0; i < row.length; i++) {
+      if (!row[i]) { // Check if the card is null
+        console.error("helpers.js: calculateScore - Found null card in row at index:", i, "Row content:", JSON.stringify(row));
+        // Optionally, decide how to handle this: throw error, skip, or assign a default non-scoring value
+        // For now, let's skip to avoid crashing, but this indicates a state problem
+        continue; 
+      }
       const n = row[i].value;
       m[n] = (m[n] || 0) + 1;
     }
@@ -140,6 +146,10 @@ function calculateFifteen(array, targetSum = 15) {
     }
 
     for (let i = startIndex; i < array.length; i++) {
+      if (!array[i]) {
+        console.error('helpers.js: calculateFifteen/subsetSumsHelper - Found null card in row (array[i] is null) at index:', i, "Row (array) content:", JSON.stringify(array));
+        continue;
+      }
       if (currentSum + Math.min(array[i].value, 10) <= targetSum) {
         // Faces count as 10
         subsetSumsHelper(currentSum + Math.min(array[i].value, 10), i + 1, [...path, array[i].value]);

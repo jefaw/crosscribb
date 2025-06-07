@@ -22,7 +22,7 @@ export default function RoundHistory({ roundHistory }) {
       <h3 className="text-lg font-bold mb-3">Round History</h3>
       <div className="space-y-3">
         {reversedHistory.map((round, index) => (
-          <div key={round.round} className="text-sm border-b border-slate-500 pb-2">
+          <div key={`${round.round}-${index}`} className="text-sm border-b border-slate-500 pb-2">
             <div className="flex justify-between items-center">
               <span className="font-medium">Round {round.round}</span>
               <span className={`font-bold ${round.winner === "Row" ? "text-cyan-400" : "text-fuchsia-400"}`}>
