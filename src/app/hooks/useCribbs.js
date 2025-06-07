@@ -100,6 +100,22 @@ export default function useCribbs(initialIsOnline = false, initialPlayerId = nul
     console.log("useCribbs: resetGameInternal called. Deck set to null.");
   };
   
+  // Function to reset just the board for next round without losing scores and history
+  const resetBoardForNextRound = () => {
+    setBoard(newBoard());
+    setHand1([]);
+    setHand2([]);
+    setTurn(1);
+    setSelectedCard(null);
+    setNumSpotsLeft(24);
+    setRoundScores([]);
+    setRoundOver(false);
+    setRoundScoreVisible(false);
+    // Set deck to null to trigger a new deck generation
+    setDeck(null);
+    console.log("useCribbs: resetBoardForNextRound called. Only board state reset, scores preserved.");
+  };
+  
   // Public reset function for Game.js to call
   const resetGame = () => {
     if (isOnline) {
@@ -373,8 +389,8 @@ export default function useCribbs(initialIsOnline = false, initialPlayerId = nul
 
     if (!isOnline) { // LOCAL GAME: Reset and deal
       console.log("useCribbs: Local game - advancing to next round.");
-      resetGameInternal(false); // This will call setDeck(newDeck()) which triggers deal
-      setCurrentRound(prev => prev + 1); // setCurrentRound was missing in local nextRound before
+      resetBoardForNextRound(); // Use the new function instead of resetGameInternal to preserve scores
+      setCurrentRound(prev => prev + 1); 
       return null;
     } else { // ONLINE GAME: Only Host should prepare and send 'nextRoundReady' action data
       if (isHostClient) {
